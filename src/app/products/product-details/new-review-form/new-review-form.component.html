@@ -1,0 +1,68 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Dodaj nową opinię</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="confirm()" #addReviewModalForm="ngForm">
+      <div class="form-group">
+        <label class="" for="reviewerEmail">Adres e-mail</label>
+        <input
+          class="form-control"
+          type="email"
+          [ngClass]="{
+            'is-invalid': reviewerEmail.invalid && reviewerEmail.touched
+          }"
+          [(ngModel)]="newReview.reviewer"
+          required
+          email
+          id="reviewerEmail"
+          name="reviewerEmail"
+          #reviewerEmail="ngModel"
+        />
+        <div
+          [hidden]="reviewerEmail.valid || reviewerEmail.untouched"
+          class="invalid-feedback"
+        >
+          Niepoprawny adres e-mail
+        </div>
+        <span class="form-text text-muted"
+          >Nie pokazujemy twojego adresu e-mail publicznie</span
+        >
+      </div>
+      <div class="form-group">
+        <label for="stars">Ocena</label>
+        <rating
+          class="form-control large-font"
+          name="stars"
+          [(ngModel)]="newReview.rating"
+          required
+          id="stars"
+          max="5"
+        ></rating>
+      </div>
+      <div class="form-group">
+        <label for="comment">Komentarz</label>
+        <textarea
+          [(ngModel)]="newReview.comment"
+          class="form-control"
+          name="comment"
+          id="comment"
+        ></textarea>
+      </div>
+      <div class="float-right mb-4">
+        <button type="button" class="btn btn-default" (click)="decline()">
+          Anuluj
+        </button>
+        <button type="submit" [disabled]="addReviewModalForm.invalid" class="btn btn-primary">
+          Potwierdź
+        </button>
+      </div>
+    </form>
+  </div>

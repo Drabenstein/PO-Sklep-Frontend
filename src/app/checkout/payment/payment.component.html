@@ -1,0 +1,62 @@
+<h2 class="text-uppercase text-bold font-weight-bold mb-4 text-center">
+  Płatność
+</h2>
+<div class="row justify-content-center">
+  <div
+    class="card m-3 card-clickable"
+    [ngClass]="{ 'card-selected': selectedId == null }"
+    style="width: 18rem;"
+    (click)="onDeferredPaymentSelected()"
+  >
+    <img
+      src="https://images.idgesg.net/images/article/2019/04/google-calendar-android-100794956-large.jpg"
+      class="card-img-top"
+      alt="Płatność odroczona"
+    />
+    <div class="card-body">
+      <h4 class="card-title text-uppercase">Zapłać później</h4>
+      <p class="card-text">
+        Zapłać za zamówienie w terminie do 7 dni od dnia złożenia zamówienia.
+        Zamówienie zostanie przekazane do realizacji po zaksięgowaniu płatności.
+      </p>
+    </div>
+  </div>
+  <div
+    class="card m-3"
+    [ngClass]="{ 'card-selected': selectedId != null }"
+    style="width: 18rem;"
+  >
+    <img
+      src="https://p0.pikrepo.com/preview/862/391/person-holding-blue-mastercard-credit-card.jpg"
+      class="card-img-top"
+      alt="Płatność online"
+    />
+    <div class="card-body">
+      <h4 class="card-title text-uppercase">Zapłać teraz</h4>
+      <div class="card-text">
+        <div
+          class="form-check mb-3"
+          *ngFor="let paymentMethod of paymentMethods; let i = index"
+        >
+          <input
+            class="form-check-input"
+            type="radio"
+            name="deliveryType"
+            [id]="'paymentType_' + i"
+            [value]="paymentMethod.name"
+            [checked]="selectedId === i"
+            (change)="onPaymentTypeSelected(i)"
+          />
+          <label class="form-check-label" [for]="'paymentType_' + i">
+            {{ paymentMethod.name }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-end mt-3 mb-3">
+  <button class="btn btn-primary continue-btn text-uppercase large-font" routerLink="../summary">
+    Potwierdź zamówienie
+  </button>
+</div>

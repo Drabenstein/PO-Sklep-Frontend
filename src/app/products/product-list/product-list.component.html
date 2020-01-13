@@ -1,0 +1,46 @@
+<ul>
+  <div class="card mb-3" *ngFor="let product of products; let i = index">
+    <div class="row no-gutters">
+      <div class="col-md-4 d-flex justify-content-center">
+        <img
+          [src]="product.imageUrl"
+          class="card-img rounded align-self-center product-item-clickable"
+          [alt]="product.name"
+          [routerLink]="[product.productId]"
+        />
+      </div>
+      <div class="col-md-8 ">
+        <div class="card-body d-flex justify-content-between">
+          <div class="col-md-8">
+            <h5
+              class="card-title font-weight-bold product-item-clickable"
+              [routerLink]="[product.productId]"
+            >
+              {{ product.name }}
+            </h5>
+            <p
+              class="card-text lead product-item-clickable"
+              [routerLink]="[product.productId]"
+            >
+              {{ product.description }}
+            </p>
+            <p class="card-text font-weight-bold">
+              {{ product.price | currency: "PLN":"symbol":undefined:"pl-PL" }}
+            </p>
+          </div>
+          <div class="col-md-4">
+            <div class="d-flex align-items-center">
+              <button
+                class="btn btn-outline-dark text-uppercase font-weight-bold stretch"
+                (click)="onAddToBasket(product)"
+              >
+                Dodaj do koszyka
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ul>
+<h4 *ngIf="products.length == 0">Kategoria jest pusta</h4>

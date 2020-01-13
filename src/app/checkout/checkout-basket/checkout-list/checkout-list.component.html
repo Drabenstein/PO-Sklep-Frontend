@@ -1,0 +1,30 @@
+<ul>
+  <div class="card mb-3" *ngFor="let checkoutItem of checkoutItems; let i = index">
+    <div class="row no-gutters">
+      <div class="col-md-4 d-flex justify-content-center">
+        <img
+          [src]="checkoutItem.imageUrl"
+          class="card-img rounded align-self-center"
+          [alt]="checkoutItem.name"
+        />
+      </div>
+      <div class="col-md-8 ">
+        <div class="card-body d-flex justify-content-between">
+          <div class="col-md-8">
+          <h5 class="card-title font-weight-bold">{{ checkoutItem.name }}</h5>
+            <p class="card-text font-weight-bold">
+              {{ checkoutItem.price | currency: 'PLN' : 'symbol' : undefined : 'pl-PL' }}
+            </p>
+            <input type="number" min="1" step="1" [(ngModel)]="checkoutItem.count" (change)="onCountChange(i)" />
+          </div>
+          <div class="col-md-4">
+            <div class="d-flex align-items-center">
+              <button class="btn btn-outline-dark text-uppercase font-weight-bold stretch" (click)="deleteItem(i)">Usuń</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ul>
+<h4 *ngIf="checkoutItems.length === 0">Koszyk jest pusty</h4>
