@@ -1,8 +1,9 @@
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Subject, Observable, BehaviorSubject, throwError } from 'rxjs';
 import { Review } from './models/review.model';
 import { Product } from 'src/app/models/product.model';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { retry, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -100,32 +101,54 @@ export class ProductService {
   //     categoryId: 2
   //   }),
   // ];
-  private appliancesSubject = new BehaviorSubject<Product[]>([]);
+  //private appliancesSubject = new BehaviorSubject<Product[]>([]);
   private url = 'https://localhost:5001/api/product';
 
   constructor(private http: HttpClient) { }
 
   getProductById(id: number): Observable<Product> {
-    // return this.appliances.find(product => {
-    //   return product.productId === id;
-    // });
-    return this.http.get<Product>(`${this.url}`)
+    let param = { params: new HttpParams().set('id', id.toString()) };
+    return this.http.get<Product>(this.url, param)
+      .pipe(
+        retry(3),
+        catchError(this.handleError)
+      );
   }
 
-  getProducts(categoryId: number): Product[] {
-    return this.appliances.filter(item => {
-      return item.categoryId == categoryId;
-    });
+  getProducts(categoryId: number): Observable<Product[]> {
+    let param = { params: new HttpParams().set('categoryId', categoryId.toString()) };
+    return this.http.get<Product[]>(this.url, param)
+      .pipe(
+        retry(3),
+        catchError(this.handleError)
+      );
   }
 
-  get Products(): Observable<Product[]> {
-    return this.appliancesSubject.asObservable();
+  getAllProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.url)
+      .pipe(
+        retry(3),
+        catchError(this.handleError)
+      );
   }
 
   addReview(productId: number, review: Review) {
-    this.appliances.find(item => {
-      return item.productId === productId
-    }).reviews.push(review);
-    this.appliancesSubject.next(this.appliances.slice());
+    // this.appliances.find(item => {
+    //   return item.productId === productId
+    // }).reviews.push(review);
+    // this.appliancesSubject.next(this.appliances.slice());
   }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } 
+    else {
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    return throwError(
+      'Something bad happened; please try again later.');
+  };
 }

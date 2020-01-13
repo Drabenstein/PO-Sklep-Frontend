@@ -21,7 +21,6 @@ export class ProductDetailsComponent implements OnInit {
     animated: true,
     keyboard: true
   };
-  productSubscription: Subscription = null;
 
   constructor(private route: ActivatedRoute, private productService: ProductService, private basketService: BasketService, private modalService: BsModalService) { }
 
@@ -33,14 +32,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   private updateProduct(id: number) {
-    this.product = this.productService.getProductById(id);
-    if(this.productSubscription != null) {
-      this.productSubscription.unsubscribe();
-    }
-
-    this.productSubscription = this.productService.Products.pipe(map(data => data.find(item => {
-      return item.productId === this.product.productId;
-    }))).subscribe(item => {
+    this.productService.getProductById(id).subscribe(item => {
       this.product = item;
       this.recalculateAveragerating();
     })
