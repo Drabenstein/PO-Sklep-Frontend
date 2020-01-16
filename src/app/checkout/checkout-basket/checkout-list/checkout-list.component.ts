@@ -17,7 +17,6 @@ export class CheckoutListComponent implements OnInit, OnDestroy {
   constructor(private basketService: BasketService) { }
 
   ngOnInit() {
-    this.checkoutItems = this.basketService.getItems();
     this.basketSubscription = this.basketService.Items.subscribe(items => {
       this.checkoutItems = items;
     });

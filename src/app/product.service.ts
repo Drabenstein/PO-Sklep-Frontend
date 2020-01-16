@@ -132,11 +132,20 @@ export class ProductService {
       );
   }
 
-  addReview(productId: number, review: Review) {
-    // this.appliances.find(item => {
-    //   return item.productId === productId
-    // }).reviews.push(review);
-    // this.appliancesSubject.next(this.appliances.slice());
+  addReview(productId: number, review: Review): Observable<any> {
+    if(productId == null) {
+      throw Error('addReview(): productId is null');
+    }
+
+    if(review == null) {
+      throw new Error('addReview(): review is null');
+    }
+  
+    return this.http.post<any>(`${this.url}/${productId}/addReview`, review)
+      .pipe(
+        retry(3),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse) {

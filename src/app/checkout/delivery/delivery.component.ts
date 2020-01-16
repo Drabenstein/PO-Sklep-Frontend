@@ -1,3 +1,4 @@
+import { BasketService } from './../../basket.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeliveryComponent implements OnInit {
   deliveryMethods: { name: string, price: number }[];
-  selectedId: number = 0;
+  selectedId: number;
 
-  constructor() { }
+  constructor(private basketService: BasketService) { }
 
   ngOnInit() {
     this.deliveryMethods = [
@@ -30,9 +31,12 @@ export class DeliveryComponent implements OnInit {
         price: 18.5
       }
     ];
+    this.selectedId = 0;
+    this.basketService.DeliveryMethodId = this.selectedId + 1;
   }
 
   onDeliveryTypeSelected(index: number) {
     this.selectedId = index;
+    this.basketService.DeliveryMethodId = this.selectedId + 1;
   }
 }

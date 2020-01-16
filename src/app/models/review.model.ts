@@ -1,15 +1,15 @@
 export class Review {
     public author: String;
-    public stars: number;
+    public rating: number;
     public comment: String;
 
     constructor(init: {
         author: String,
-        stars: number,
+        rating: number,
         comment: String
     }) {
         this.author = init.author;
-        this.stars = init.stars;
+        this.rating = init.rating;
         this.comment = init.comment;
     }
 }

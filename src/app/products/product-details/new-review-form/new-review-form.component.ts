@@ -12,26 +12,30 @@ import { Review } from 'src/app/models/review.model';
 export class NewReviewFormComponent implements OnInit {
   @ViewChild('addReviewModalForm', { static: false }) modalForm: NgForm;
   productId: number;
-  newReview = {
-    reviewer: '',
-    rating: 3.0,
-    comment: null
-  };
+  newReview: Review;
+  isSending: Boolean;
+  errorMessage: String;
 
   constructor(public modalRef: BsModalRef, private productService: ProductService) { }
 
   ngOnInit() {
+    this.newReview = new Review({
+      author: '',
+      rating: 3.0,
+      comment: null
+    });
+    this.isSending = false;
   }
 
   confirm() {
     if (this.modalForm.valid) {
-      this.productService.addReview(this.productId, new Review({
-        author: this.newReview.reviewer,
-        stars: this.newReview.rating,
-        comment: this.newReview.comment
-      }));
-      console.log(this.modalForm);
-      this.modalRef.hide();
+      this.isSending = true;
+      this.productService.addReview(this.productId, this.newReview).subscribe(resp => {
+        this.modalRef.hide();
+      },
+        err => {
+          this.errorMessage = 'Wystąpił błąd przy dodawaniu opinii';
+        });
     }
   }
 

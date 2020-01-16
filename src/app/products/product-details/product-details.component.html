@@ -1,13 +1,13 @@
 <div class="row mt-5">
-  <img class="col-6" [src]="product.imageUrl" [alt]="product.name" />
+  <img class="col-6" [src]="product?.imageUrl" [alt]="product?.name" />
   <div class="container col-6 mx-auto mt-3">
     <h5 class="text-uppercase text-monospace font-weight-bold">
-      {{ product.producerName }}
+      {{ product?.producerName }}
     </h5>
-    <h1 class="font-weight-bolder">{{ product.name }}</h1>
-    <p class="lead">{{ product.description }}</p>
+    <h1 class="font-weight-bolder">{{ product?.name }}</h1>
+    <p class="lead">{{ product?.description }}</p>
     <h2 class="font-weight-bolder">
-      {{ product.price | currency: "PLN":"symbol":undefined:"pl-PL" }}
+      {{ product?.price | currency: "PLN":"symbol":undefined:"pl-PL" }}
     </h2>
     <button
       class="btn btn-dark btn-basket large-font text-uppercase font-weight-bolder text-monospace p-3 pl-4 pr-4 mt-4"
@@ -20,7 +20,7 @@
 
 <div class="row justify-content-between">
   <p class="font-weight-bold large-font ml-5 pl-5 mt-5 text-monospace">
-    Opinie ({{ product.reviews?.length !== null ? product.reviews.length : 0 }})
+    Opinie ({{ product?.reviews?.length !== null ? product.reviews.length : 0 }})
   </p>
   <button
     class="btn btn-dark btn-basket large-font font-weight-bold mt-4 text-monospace p-3 mt-4 mr-4"
@@ -36,11 +36,11 @@
   >
   <span class="ml-4 lead font-weight-bold">Ocena klientów</span>
 </div>
-<div class="form-group border border-dark rounded col-10 mx-auto mt-4 mb-4" *ngFor="let review of product.reviews">
+<div class="form-group border border-dark rounded col-10 mx-auto mt-4 mb-4" *ngFor="let review of product?.reviews">
   <div class="row p-2">
     <h3>{{ review.author.substr(0, review.author.indexOf('@')) }}</h3>
     <rating
-      [ngModel]="review.stars"
+      [(ngModel)]="review.rating"
       class="large-font ml-4"
       [readonly]="true"
     ></rating>

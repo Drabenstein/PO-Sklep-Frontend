@@ -7,7 +7,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { registerLocaleData } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CarouselModule, RatingModule, ModalModule } from 'ngx-bootstrap';
+import { CarouselModule, RatingModule, ModalModule, AlertModule } from 'ngx-bootstrap';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -47,6 +47,7 @@ registerLocaleData(localePl, 'pl-PL');
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    AlertModule,
     CarouselModule,
     RatingModule,
     ModalModule.forRoot(),

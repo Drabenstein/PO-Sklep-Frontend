@@ -15,6 +15,7 @@ export class ProductListComponent implements OnInit {
   constructor(private route: ActivatedRoute, private productService: ProductService, private basketService: BasketService) { }
 
   ngOnInit() {
+    this.products = [];
     this.route.queryParams.subscribe(queryParams => {
       this.productService.getProducts(+queryParams['category'])
         .subscribe(items => {

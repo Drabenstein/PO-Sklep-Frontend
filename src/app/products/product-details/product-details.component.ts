@@ -27,20 +27,20 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.updateProduct(+params['id']);
-      this.recalculateAveragerating();
+      this.recalculateAverageRating();
     });
   }
 
   private updateProduct(id: number) {
     this.productService.getProductById(id).subscribe(item => {
       this.product = item;
-      this.recalculateAveragerating();
+      this.recalculateAverageRating();
     })
   }
 
-  private recalculateAveragerating() {
-    if(this.product.reviews != null && this.product.reviews.length > 0) {
-      this.rating = this.product.reviews.reduce((a, b, i, arr) => a + b.stars, 0.0) / this.product.reviews.length;
+  private recalculateAverageRating() {
+    if(this.product != null && this.product.reviews != null && this.product.reviews.length > 0) {
+      this.rating = this.product.reviews.reduce((a, b, i, arr) => a + b.rating, 0.0) / this.product.reviews.length;
     }
     else {
       this.rating = 0.0;
@@ -52,6 +52,12 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
+    this.modalService.onHidden.subscribe(next => {
+      this.productService.getProductById(this.product.productId).subscribe(updatedData => {
+        this.product.reviews = updatedData.reviews;
+        this.recalculateAverageRating();
+      })
+    })
     this.addReviewModalRef = this.modalService.show(NewReviewFormComponent, this.modalConfig);
     this.addReviewModalRef.content.productId = this.product.productId;
   }

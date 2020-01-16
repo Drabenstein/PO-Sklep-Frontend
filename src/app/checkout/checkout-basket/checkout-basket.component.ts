@@ -17,9 +17,6 @@ export class CheckoutBasketComponent implements OnInit, OnDestroy {
   constructor(private basketService: BasketService) { }
 
   ngOnInit() {
-    let items = this.basketService.getItems();
-    this.isBasketEmpty = items.length === 0;
-    this.recalculateSummary(items);
     this.basketSubscription = this.basketService.Items.subscribe(items => {
       this.recalculateSummary(items);
       this.isBasketEmpty = items.length === 0;
