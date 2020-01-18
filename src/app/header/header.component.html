@@ -2,16 +2,26 @@
   <a class="navbar-brand" routerLink="">DomTech</a>
   <ul class="navbar-nav mr-auto">
     <li class="nav-item mx-5 px-5 align-items-center">
-      <a class="nav-link text-nowrap text-white" routerLinkActive="active" routerLink="/products" [queryParams]="{ category: 2 }"
+      <a
+        class="nav-link text-nowrap text-white"
+        routerLinkActive="active"
+        routerLink="/products"
+        [queryParams]="{ category: 2 }"
         >Duże AGD</a
       >
     </li>
     <li class="nav-item mx-3 px-5 align-items-center">
-      <a class="nav-link text-nowrap text-white" routerLinkActive="active" routerLink="/products" [queryParams]="{ category: 1 }">Małe AGD</a>
+      <a
+        class="nav-link text-nowrap text-white"
+        routerLinkActive="active"
+        routerLink="/products"
+        [queryParams]="{ category: 1 }"
+        >Małe AGD</a
+      >
     </li>
   </ul>
   <input
-    class="form-control  search-bar"
+    class="form-control search-bar"
     type="search"
     placeholder="Szukaj produktów"
   />

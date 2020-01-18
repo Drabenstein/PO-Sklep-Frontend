@@ -27,5 +27,4 @@ export class CheckoutSummaryComponent implements OnInit {
       console.log('compl');
     });
   }
-
 }
