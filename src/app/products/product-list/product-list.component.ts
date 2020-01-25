@@ -11,15 +11,18 @@ import { BasketService } from '../../basket.service';
 })
 export class ProductListComponent implements OnInit {
   products: Product[];
+  isLoading: boolean;
 
   constructor(private route: ActivatedRoute, private productService: ProductService, private basketService: BasketService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.products = [];
     this.route.queryParams.subscribe(queryParams => {
       this.productService.getProducts(+queryParams['category'])
         .subscribe(items => {
           this.products = items;
+          this.isLoading = false;
         })
     });
   }

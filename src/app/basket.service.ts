@@ -24,7 +24,7 @@ export class BasketService {
   addToBasket(product: Product) {
     let foundItem = this.basketItems.find(item => {
       return item.productId === product.productId;
-    })
+    });
 
     if (foundItem) {
       foundItem.count++;

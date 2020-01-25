@@ -43,4 +43,9 @@
     </div>
   </div>
 </ul>
-<h4 *ngIf="products.length === 0">Kategoria jest pusta</h4>
+<h4 *ngIf="products.length === 0 && !isLoading">Kategoria jest pusta</h4>
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center">
+  <div class="spinner-border text-dark loading" role="status">
+    <span class="sr-only">Ładowanie...</span>
+  </div>
+</div>
